@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <livewire:switch-theme />
+    <livewire:todos />
 </body>
 
 </html>
