@@ -12,11 +12,7 @@
 <body>
     <div class="h-[100vh] w-full flex flex-col justify-center items-center gap-8">
         <h2 class="text-2xl">TODOリスト</h2>
-        {{-- 入力部 --}}
-        <form class="flex w-96">
-            <input type="text" class="input input-bordered w-full max-w-xs">
-            <button type="submit" class="btn btn-neutral">追加</button>
-        </form>
+        <a href="{{ route('todos.create') }}" class="btn btn-neutral w-96">新規追加</a>
         {{-- リスト表示部 --}}
         <ul class="flex flex-col text-left gap-2 w-96">
             <li>きゅうり</li>
