@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TodoController;
 
 // このアプリケーションはTODO機能しかないので、リダイレクトしてTODO一覧画面に遷移する
 Route::get('/', function () {
@@ -8,6 +9,4 @@ Route::get('/', function () {
 });
 
 // RESTfulなURLを設定する
-Route::get('todos', function () {
-    return view('todos.index');
-})->name('todos.index');
+Route::get('todos', [TodoController::class, 'index'])->name('todos.index');
