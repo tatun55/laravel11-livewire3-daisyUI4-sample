@@ -15,4 +15,9 @@ class TodoController extends Controller
     {
         return view('todos.create');
     }
+
+    public function store(Request $request)
+    {
+        dd($request->all());
+    }
 }

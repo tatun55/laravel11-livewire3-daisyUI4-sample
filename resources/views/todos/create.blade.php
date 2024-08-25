@@ -13,8 +13,9 @@
     <div class="h-[100vh] w-full flex flex-col justify-center items-center gap-8">
         <h2 class="text-2xl">TODOリスト新規追加</h2>
         {{-- 入力部 --}}
-        <form class="flex w-96">
-            <input type="text" class="input input-bordered w-full max-w-xs">
+        <form action="{{ route('todos.store') }}" method="POST" class="flex w-96">
+            @csrf
+            <input name="content" type="text" class="input input-bordered w-full max-w-xs">
             <button type="submit" class="btn btn-neutral">追加</button>
         </form>
     </div>
