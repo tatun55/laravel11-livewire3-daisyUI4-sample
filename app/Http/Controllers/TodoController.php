@@ -9,7 +9,10 @@ class TodoController extends Controller
 {
     public function index()
     {
-        return view('todos.index');
+        // TODOデータを取得
+        $todos = Todo::all();
+        return view('todos.index', compact('todos'));
+        // return view('todos.index',['todos' => $todos]); // compact関数を使わずに連想配列を使ってもOK
     }
 
     public function create()

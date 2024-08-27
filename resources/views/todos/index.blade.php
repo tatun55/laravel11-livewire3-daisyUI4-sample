@@ -15,9 +15,11 @@
         <a href="{{ route('todos.create') }}" class="btn btn-neutral w-96">新規追加</a>
         {{-- リスト表示部 --}}
         <ul class="flex flex-col text-left gap-2 w-96">
-            <li>きゅうり</li>
-            <li>なす</li>
-            <li>かぼちゃ</li>
+            @foreach ($todos as $todo)
+                <li>
+                    <span>{{ $todo->title }}</span>
+                </li>
+            @endforeach
         </ul>
     </div>
 </body>
