@@ -15,8 +15,8 @@
         {{-- 入力部 --}}
         <form action="{{ route('todos.store') }}" method="POST" class="flex w-96">
             @csrf
-            <input name="content" type="text" class="input input-bordered w-full max-w-xs">
-            <button type="submit" class="btn btn-neutral">追加</button>
+            <input name="title" type="text" class="input input-bordered w-full max-w-xs">
+            <button type="submit" class="btn btn-neutral">保存</button>
         </form>
     </div>
 </body>
