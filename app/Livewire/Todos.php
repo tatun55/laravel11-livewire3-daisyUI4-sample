@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use App\Models\Todo;
 
 class Todos extends Component
 {
@@ -18,6 +19,10 @@ class Todos extends Component
 
     public function add()
     {
+        $todo = new Todo();
+        $todo->title = $this->todo;
+        $todo->save();
+        dd(Todo::all()->toArray());
         $this->todos[] = $this->todo;
         $this->reset('todo'); //ここに追加
     }
