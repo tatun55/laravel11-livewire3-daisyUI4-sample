@@ -8,7 +8,7 @@
     {{-- リスト表示部 --}}
     <ul class="flex flex-col text-left gap-2">
         @foreach ($todos as $todo)
-            <li class="w-96">{{ $todo }}</li>
+            <li class="w-96">{{ $todo->title }}</li>
         @endforeach
     </ul>
 </div>
