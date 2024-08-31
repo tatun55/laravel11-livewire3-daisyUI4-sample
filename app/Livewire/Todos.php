@@ -6,6 +6,8 @@ use Livewire\Component;
 
 class Todos extends Component
 {
+    public $todo = ''; //ここを追加
+
     public $todos = [
         '買い物に行く',
         '掃除をする',
@@ -13,6 +15,11 @@ class Todos extends Component
         '料理をする',
         '本を読む',
     ];
+
+    public function add()
+    {
+        dd($this->todo); //ここを編集
+    }
 
     public function render()
     {
