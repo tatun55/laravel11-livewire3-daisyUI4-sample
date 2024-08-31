@@ -4,15 +4,18 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Todo;
+use Livewire\Attributes\Validate;
 
 class Todos extends Component
 {
+    #[Validate('required|max:32')]
     public $todo = '';
 
     public $todos = [];
 
     public function add()
     {
+        $this->validate();
         $todo = new Todo();
         $todo->title = $this->todo;
         $todo->save();
