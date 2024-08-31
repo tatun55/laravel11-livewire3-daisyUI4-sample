@@ -18,7 +18,8 @@ class Todos extends Component
 
     public function add()
     {
-        $this->todos[] = $this->todo; //ここを修正
+        $this->todos[] = $this->todo;
+        $this->reset('todo'); //ここに追加
     }
 
     public function render()
