@@ -12,7 +12,17 @@
 <body>
     <div class="h-[100vh] w-full flex flex-col justify-center items-center gap-8">
         <h2 class="text-2xl">TODOリスト</h2>
-        <a href="{{ route('todos.create') }}" class="btn btn-neutral w-96">新規追加</a>
+        {{-- 入力部 --}}
+        <div class="flex flex-col">
+            <form action="{{ route('todos.store') }}" method="POST" class="flex w-96">
+                @csrf
+                <input name="title" type="text" class="input input-bordered w-full max-w-xs" value="{{ old('title') ?? null }}">
+                <button type="submit" class="btn btn-neutral">保存</button>
+            </form>
+            @error('title')
+                <div class="text-error">{{ $message }}</div>
+            @enderror
+        </div>
         {{-- リスト表示部 --}}
         <ul class="flex flex-col text-left gap-2 w-96">
             @foreach ($todos as $todo)
