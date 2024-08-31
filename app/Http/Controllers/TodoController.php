@@ -22,6 +22,11 @@ class TodoController extends Controller
 
     public function store(Request $request)
     {
+        // Validationを追加
+        $request->validate([
+            'title' => 'required|max:32',
+        ]);
+
         $todo = new Todo();
         $todo->title = $request->title;
         $todo->save();
