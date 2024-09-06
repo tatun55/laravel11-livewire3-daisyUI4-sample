@@ -26,6 +26,13 @@ class Posts extends Component
         $this->message = $this->post->message;
     }
 
+    public function updatePost()
+    {
+        $this->post->message = $this->message;
+        $this->post->save();
+        $this->reset('message');
+    }
+
     public function render()
     {
         $this->posts = Post::latest()->get();
