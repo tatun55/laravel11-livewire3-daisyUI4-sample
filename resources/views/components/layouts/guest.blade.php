@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    Guest
     {{ $slot }}
 </body>
 
