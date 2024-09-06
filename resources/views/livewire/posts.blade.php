@@ -20,15 +20,34 @@
                         <button onclick="create_modal.close()" target="storePost" type="submit" class="btn btn-primary">送信</button>
                     </div>
                 </form>
+
             </div>
             <div onclick="create_modal.close()" class="modal-backdrop"></div>
         </dialog>
 
         {{-- メッセージ一覧 --}}
         <div class="mt-8">
-            @foreach ($posts as $post)
-                <p>{{ $post->message }}</p>
-            @endforeach
+            <div class="overflow-x-auto">
+                <table class="table text-center">
+                    <thead>
+                        <tr>
+                            <th>メッセージ</th>
+                            <th>作成日時</th>
+                            <th>更新日時</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($posts as $post)
+                            <tr class="hover">
+                                <td>{{ $post->message }}</td>
+                                <td>{{ $post->created_at }}</td>
+                                <td>{{ $post->updated_at }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
+
     </div>
 </div>
