@@ -17,13 +17,18 @@
                     </p>
                     <div class="flex justify-between">
                         <button onclick="create_modal.close()" type="button" class="btn btn-ghost">キャンセル</button>
-                        <button onclick="create_modal.close()" type="submit" class="btn btn-primary">送信</button>
+                        <button onclick="create_modal.close()" target="storePost" type="submit" class="btn btn-primary">送信</button>
                     </div>
                 </form>
-
             </div>
             <div onclick="create_modal.close()" class="modal-backdrop"></div>
         </dialog>
 
+        {{-- メッセージ一覧 --}}
+        <div class="mt-8">
+            @foreach ($posts as $post)
+                <p>{{ $post->message }}</p>
+            @endforeach
+        </div>
     </div>
 </div>
