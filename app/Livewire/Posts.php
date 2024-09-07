@@ -4,15 +4,16 @@ namespace App\Livewire;
 
 use App\Models\Post;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Posts extends Component
 {
+    use WithPagination;
+
     public $message = '';
     public $current_message = '';
 
     public Post $post;
-    public $posts = [];
-
 
     public function storePost()
     {
@@ -55,8 +56,7 @@ class Posts extends Component
 
     public function render()
     {
-        $this->posts = Post::latest()->get();
-        return view('livewire.posts')
+        return view('livewire.posts', ['posts' => Post::latest()->paginate(10)])
             ->title('投稿管理ページ');
     }
 }

@@ -58,6 +58,11 @@
             </div>
         </div>
 
+        {{-- Pagination --}}
+        <div class="py-8">
+            {{ $posts->links() }}
+        </div>
+
         {{-- Create Modal --}}
         <div x-show="openCreateModal" style="display: none" x-on:keydown.escape.prevent.stop="openCreateModal = false; $wire.resetFormValidation(); $wire.message = '';" role="dialog" aria-modal="true" class="fixed inset-0 z-10 overflow-y-auto">
             <!-- Overlay -->
