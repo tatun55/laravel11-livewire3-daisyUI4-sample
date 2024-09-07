@@ -9,16 +9,21 @@ class Posts extends Component
 {
     public $message = '';
     public $current_message = '';
+
     public Post $post;
     public $posts = [];
 
 
     public function storePost()
     {
+        $this->validate([
+            'message' => 'required|max:255'
+        ]);
         $post = new Post();
         $post->message = $this->message;
         $post->save();
         $this->reset('message');
+        $this->dispatch('post-saved');
     }
 
     public function editPost($id)
@@ -29,14 +34,23 @@ class Posts extends Component
 
     public function updatePost()
     {
+        $this->validate([
+            'current_message' => 'required|max:255'
+        ]);
         $this->post->message = $this->current_message;
         $this->post->save();
         $this->reset('message');
+        $this->dispatch('post-edited');
     }
 
     public function deletePost()
     {
         $this->post->delete();
+    }
+
+    public function resetFormValidation()
+    {
+        $this->resetValidation();
     }
 
     public function render()

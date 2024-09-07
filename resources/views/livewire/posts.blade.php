@@ -1,29 +1,8 @@
-<div x-data="{ openEditModal: false, openDeleteModal: false }" class="flex justify-center">
+<div x-data="{ openCreateModal: false, openEditModal: false, openDeleteModal: false }" class="flex justify-center">
     <div class="w-full max-w-6xl pt-8">
 
         {{-- 新規追加ボタン --}}
-        <button class="btn btn-primary" onclick="create_modal.showModal()">新規追加</button>
-
-        {{-- モーダル --}}
-        <dialog id="create_modal" class="modal">
-            <div class="modal-box">
-                <button onclick="create_modal.close()" class="btn btn-sm btn-circle btn-ghost absolute right-4 top-4">✕</button>
-                <h3 class="text-lg font-bold">メッセージの入力</h3>
-
-                {{-- フォーム --}}
-                <form wire:submit='storePost'>
-                    <p class="py-4">
-                        <textarea wire:model='message' name="message" placeholder="メッセージを入力してください" class="textarea textarea-bordered textarea-md w-full max-w-lg"></textarea>
-                    </p>
-                    <div class="flex justify-between">
-                        <button onclick="create_modal.close()" type="button" class="btn btn-ghost">キャンセル</button>
-                        <button onclick="create_modal.close()" target="storePost" type="submit" class="btn btn-primary">送信</button>
-                    </div>
-                </form>
-
-            </div>
-            <div onclick="create_modal.close()" class="modal-backdrop"></div>
-        </dialog>
+        <button class="btn btn-primary" x-on:click="openCreateModal = true">新規追加</button>
 
         {{-- メッセージ一覧 --}}
         <div class="mt-8">
@@ -79,30 +58,67 @@
             </div>
         </div>
 
-        <!-- Modal -->
+        {{-- Create Modal --}}
+        <div x-show="openCreateModal" style="display: none" x-on:keydown.escape.prevent.stop="openCreateModal = false; $wire.resetFormValidation(); $wire.message = '';" role="dialog" aria-modal="true" class="fixed inset-0 z-10 overflow-y-auto">
+            <!-- Overlay -->
+            <div x-show="openCreateModal" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>
+
+            <!-- Panel -->
+            <div x-show="openCreateModal" x-transition x-on:click="openCreateModal = false; $wire.resetFormValidation(); $wire.message = '';" class="relative flex min-h-screen items-center justify-center p-4">
+                <div x-on:click.stop x-trap.noscroll.inert="openCreateModal" class="relative w-full max-w-lg overflow-y-auto rounded-xl bg-white p-8 shadow-lg">
+                    <button x-on:click="openCreateModal = false; $wire.resetFormValidation(); $wire.message = '';" class="btn btn-sm btn-circle btn-ghost absolute right-4 top-4">✕</button>
+                    <h3 class="text-lg font-bold">メッセージの追加</h3>
+
+                    <!-- Form -->
+                    <form wire:submit='storePost'>
+                        <p class="py-4">
+                            <textarea wire:model='message' name="message" placeholder="メッセージを入力してください" class="textarea textarea-bordered textarea-md w-full max-w-lg"></textarea>
+                            @error('message')
+                                <span class="text-error">{{ $message }}</span>
+                            @enderror
+                        </p>
+
+                        <!-- Buttons -->
+                        <div class="flex justify-between">
+                            <button type="button" x-on:click="openCreateModal = false; $wire.resetFormValidation(); $wire.message = '';" class="btn btn-ghost">
+                                キャンセル
+                            </button>
+                            <button type="submit" x-on:post-saved.window="openCreateModal = false" class="btn btn-primary">
+                                追加
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Modal -->
         <div x-show="openEditModal" style="display: none" x-on:keydown.escape.prevent.stop="openEditModal = false" role="dialog" aria-modal="true" class="fixed inset-0 z-10 overflow-y-auto">
             <!-- Overlay -->
             <div x-show="openEditModal" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>
 
             <!-- Panel -->
-            <div x-show="openEditModal" x-transition x-on:click="openEditModal = false" class="relative flex min-h-screen items-center justify-center p-4">
+            <div x-show="openEditModal" x-transition x-on:click="openEditModal = false; $wire.resetFormValidation(); $wire.current_message = '';" class="relative flex min-h-screen items-center justify-center p-4">
                 <div x-on:click.stop x-trap.noscroll.inert="openEditModal" class="relative w-full max-w-lg overflow-y-auto rounded-xl bg-white p-8 shadow-lg">
-                    <button x-on:click="openEditModal = false" class="btn btn-sm btn-circle btn-ghost absolute right-4 top-4">✕</button>
+                    <button x-on:click="openEditModal = false; $wire.resetFormValidation(); $wire.current_message = '';" class="btn btn-sm btn-circle btn-ghost absolute right-4 top-4">✕</button>
                     <h3 class="text-lg font-bold">メッセージの編集</h3>
 
                     <!-- Form -->
                     <form wire:submit='updatePost'>
                         <p class="py-4">
                             <textarea wire:model='current_message' name="current_message" placeholder="メッセージを入力してください" class="textarea textarea-bordered textarea-md w-full max-w-lg"></textarea>
+                            @error('current_message')
+                                <span class="text-error">{{ $message }}</span>
+                            @enderror
                         </p>
 
                         <!-- Buttons -->
                         <div class="flex justify-between">
-                            <button type="button" x-on:click="openEditModal = false" class="btn btn-ghost">
+                            <button type="button" x-on:click="openEditModal = false; $wire.resetFormValidation(); $wire.current_message = '';" class="btn btn-ghost">
                                 キャンセル
                             </button>
 
-                            <button type="submit" x-on:click="openEditModal = false" class="btn btn-primary">
+                            <button type="submit" x-on:post-updated="openEditModal = false" class="btn btn-primary">
                                 編集
                             </button>
                         </div>
@@ -111,7 +127,7 @@
             </div>
         </div>
 
-        <!-- Modal -->
+        <!-- Delete Modal -->
         <div x-show="openDeleteModal" style="display: none" x-on:keydown.escape.prevent.stop="openDeleteModal = false" role="dialog" aria-modal="true" class="fixed inset-0 z-10 overflow-y-auto">
             <!-- Overlay -->
             <div x-show="openDeleteModal" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>
