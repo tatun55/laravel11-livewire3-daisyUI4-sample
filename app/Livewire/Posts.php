@@ -34,6 +34,11 @@ class Posts extends Component
         $this->reset('message');
     }
 
+    public function deletePost()
+    {
+        $this->post->delete();
+    }
+
     public function render()
     {
         $this->posts = Post::latest()->get();
