@@ -93,7 +93,7 @@
                     <!-- Form -->
                     <form wire:submit='updatePost'>
                         <p class="py-4">
-                            <textarea wire:model='message' name="message" placeholder="メッセージを入力してください" class="textarea textarea-bordered textarea-md w-full max-w-lg"></textarea>
+                            <textarea wire:model='current_message' name="current_message" placeholder="メッセージを入力してください" class="textarea textarea-bordered textarea-md w-full max-w-lg"></textarea>
                         </p>
 
                         <!-- Buttons -->

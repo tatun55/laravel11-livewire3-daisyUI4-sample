@@ -8,6 +8,7 @@ use Livewire\Component;
 class Posts extends Component
 {
     public $message = '';
+    public $current_message = '';
     public Post $post;
     public $posts = [];
 
@@ -23,12 +24,12 @@ class Posts extends Component
     public function editPost($id)
     {
         $this->post = Post::find($id);
-        $this->message = $this->post->message;
+        $this->current_message = $this->post->message;
     }
 
     public function updatePost()
     {
-        $this->post->message = $this->message;
+        $this->post->message = $this->current_message;
         $this->post->save();
         $this->reset('message');
     }
