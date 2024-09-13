@@ -55,7 +55,7 @@ class Posts extends Component
 
     public function render()
     {
-        return view('livewire.posts', ['posts' => Post::latest()->paginate(10)])
+        return view('livewire.posts', ['posts' => Post::orderBy('created_at', 'desc')->paginate(10)])
             ->title('投稿管理ページ');
     }
 }
