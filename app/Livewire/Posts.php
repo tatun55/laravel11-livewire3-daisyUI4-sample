@@ -40,8 +40,7 @@ class Posts extends Component
         ]);
         $this->post->message = $this->current_message;
         $this->post->save();
-        $this->reset('message');
-        $this->dispatch('post-edited');
+        $this->dispatch('post-updated');
     }
 
     public function deletePost()

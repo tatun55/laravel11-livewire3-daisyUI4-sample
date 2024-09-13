@@ -64,7 +64,7 @@
         </div>
 
         {{-- Create Modal --}}
-        <div x-show="openCreateModal" style="display: none" x-on:keydown.escape.prevent.stop="openCreateModal = false; $wire.resetFormValidation(); $wire.message = '';" role="dialog" aria-modal="true" class="fixed inset-0 z-10 overflow-y-auto">
+        <div x-show="openCreateModal" x-on:post-saved.window="openCreateModal = false" style="display: none" x-on:keydown.escape.prevent.stop="openCreateModal = false; $wire.resetFormValidation(); $wire.message = '';" role="dialog" aria-modal="true" class="fixed inset-0 z-10 overflow-y-auto">
             <!-- Overlay -->
             <div x-show="openCreateModal" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>
 
@@ -88,7 +88,7 @@
                             <button type="button" x-on:click="openCreateModal = false; $wire.resetFormValidation(); $wire.message = '';" class="btn btn-ghost">
                                 キャンセル
                             </button>
-                            <button type="submit" x-on:post-saved.window="openCreateModal = false" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary">
                                 追加
                             </button>
                         </div>
@@ -98,7 +98,7 @@
         </div>
 
         <!-- Edit Modal -->
-        <div x-show="openEditModal" style="display: none" x-on:keydown.escape.prevent.stop="openEditModal = false" role="dialog" aria-modal="true" class="fixed inset-0 z-10 overflow-y-auto">
+        <div x-show="openEditModal" style="display: none" x-on:post-updated.window="openEditModal = false" x-on:keydown.escape.prevent.stop="openEditModal = false" role="dialog" aria-modal="true" class="fixed inset-0 z-10 overflow-y-auto">
             <!-- Overlay -->
             <div x-show="openEditModal" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>
 
@@ -123,13 +123,15 @@
                                 キャンセル
                             </button>
 
-                            <button type="submit" x-on:post-updated="openEditModal = false" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary">
                                 編集
                             </button>
                         </div>
+
                     </form>
                 </div>
             </div>
+
         </div>
 
         <!-- Delete Modal -->
@@ -157,9 +159,11 @@
                                 削除
                             </button>
                         </div>
+
                     </form>
                 </div>
             </div>
+
         </div>
 
     </div>
