@@ -6,25 +6,27 @@ use App\Models\Post;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-
 class Posts extends Component
 {
     use WithPagination;
 
     public $message = '';
     public $current_message = '';
+
     public Post $post;
+
+    public $search = '';
 
     public function storePost()
     {
         $this->validate([
             'message' => 'required|max:255'
         ]);
-
         $post = new Post();
         $post->message = $this->message;
         $post->save();
-        $this->reset('message'); // textarea[name="message"]をリセットする
+        $this->reset('message');
+        $this->dispatch('post-saved');
     }
 
     public function editPost($id)
@@ -38,10 +40,9 @@ class Posts extends Component
         $this->validate([
             'current_message' => 'required|max:255'
         ]);
-
         $this->post->message = $this->current_message;
         $this->post->save();
-        $this->reset('current_message');
+        $this->dispatch('post-updated');
     }
 
     public function deletePost()
@@ -49,7 +50,6 @@ class Posts extends Component
         $this->post->delete();
     }
 
-    // Validationメッセージのリセット用に作成
     public function resetFormValidation()
     {
         $this->resetValidation();
@@ -57,7 +57,12 @@ class Posts extends Component
 
     public function render()
     {
-        return view('livewire.posts', ['posts' => Post::latest()->paginate(10)])
+        $query = Post::query();
+        if ($this->search) {
+            $query->where('message', 'like', '%' . $this->search . '%');
+        }
+
+        return view('livewire.posts', ['posts' => $query->orderBy('created_at', 'desc')->paginate(10)])
             ->title('投稿管理ページ');
     }
 }
