@@ -55,6 +55,12 @@ class Posts extends Component
         $this->resetValidation();
     }
 
+    // Searchプロパティが更新されたときに実行されるメソッド
+    public function updatingSearch()
+    {
+        $this->resetPage(); // Pagenationをリセットする
+    }
+
     public function render()
     {
         $query = Post::query();
