@@ -24,13 +24,18 @@ class Posts extends Component
 
     public function storePost()
     {
-        $this->photo->store(path: 'photos');
-
         $this->validate([
             'message' => 'required|max:255'
         ]);
         $post = new Post();
         $post->message = $this->message;
+
+        // 画像がアップロードされている場合は、画像を保存する
+        if ($this->photo) {
+            $path = $this->photo->store(path: 'photos');
+            $post->img_path = $path;
+        }
+
         $post->save();
         $this->reset('message');
         $this->dispatch('post-saved');

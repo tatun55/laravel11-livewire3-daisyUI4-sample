@@ -1,4 +1,4 @@
-<div x-data="{ openCreateModal: false, openEditModal: false, openDeleteModal: false }" class="flex justify-center">
+<div x-data="{ openCreateModal: false, openEditModal: false, openDeleteModal: false, openShowModal: false }" class="flex justify-center">
     <div class="w-full max-w-6xl pt-8">
 
         <div class="flex justify-between">
@@ -30,7 +30,7 @@
                     <tbody>
                         @foreach ($posts as $post)
                             <tr wire:key="post-{{ $post->id }}" class="hover">
-                                <td>{{ $post->message }}</td>
+                                <td> <a x-on:click="$wire.editPost('{{ $post->id }}'); openShowModal = true;" class="link">{{ $post->message }}</a></td>
                                 <td>{{ $post->created_at->diffForHumans() }}</td>
                                 <td>{{ $post->updated_at->diffForHumans() }}</td>
 
@@ -183,6 +183,30 @@
             </div>
 
         </div>
+
+        <!-- Show Modal -->
+        <div x-show="openShowModal" style="display: none" x-on:post-updated.window="openShowModal = false" x-on:keydown.escape.prevent.stop="openShowModal = false" role="dialog" aria-modal="true" class="fixed inset-0 z-10 overflow-y-auto">
+            <!-- Overlay -->
+            <div x-show="openShowModal" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>
+
+            <!-- Panel -->
+            <div x-show="openShowModal" x-transition x-on:click="openShowModal = false;" class="relative flex min-h-screen items-center justify-center p-4">
+                <div x-on:click.stop x-trap.noscroll.inert="openShowModal" class="relative w-full max-w-lg overflow-y-auto rounded-xl bg-white p-8 shadow-lg">
+                    <button x-on:click="openShowModal = false;" class="btn btn-sm btn-circle btn-ghost focus:outline-none absolute right-4 top-4">✕</button>
+                    <h3 class="text-lg font-bold">メッセージ</h3>
+
+                    <!-- Content -->
+                    <div>
+                        <p class="py-4">
+                            {{ $current_message }}
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
 
     </div>
 </div>
