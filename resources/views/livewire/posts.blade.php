@@ -83,10 +83,17 @@
             <div x-show="openCreateModal" x-transition x-on:click="openCreateModal = false; $wire.resetFormValidation(); $wire.message = '';" class="relative flex min-h-screen items-center justify-center p-4">
                 <div x-on:click.stop x-trap.noscroll.inert="openCreateModal" class="relative w-full max-w-lg overflow-y-auto rounded-xl bg-white p-8 shadow-lg">
                     <button x-on:click="openCreateModal = false; $wire.resetFormValidation(); $wire.message = '';" class="btn btn-sm btn-circle btn-ghost absolute right-4 top-4">✕</button>
-                    <h3 class="text-lg font-bold">メッセージの追加</h3>
+                    <h3 class="text-lg font-bold mb-4">メッセージの追加</h3>
 
                     <!-- Form -->
                     <form wire:submit='storePost'>
+
+                        {{-- ファイルアップロード --}}
+                        <input type="file" class="file-input file-input-bordered w-full max-w-md" />
+                        @error('photo')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
+
                         <p class="py-4">
                             <textarea wire:model='message' name="message" placeholder="メッセージを入力してください" class="textarea textarea-bordered textarea-md w-full max-w-lg"></textarea>
                             @error('message')
