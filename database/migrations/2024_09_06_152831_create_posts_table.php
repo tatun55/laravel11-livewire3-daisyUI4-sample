@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("user_id")->constrained(); // 外部キー制約を追加。またこれだけで削除時に関連する投稿も削除される。
             $table->string("message", 255);
             $table->string("photo_path", 255)->nullable();
             $table->timestamps();

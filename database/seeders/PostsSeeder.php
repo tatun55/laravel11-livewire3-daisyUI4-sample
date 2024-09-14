@@ -17,13 +17,18 @@ class PostsSeeder extends Seeder
         $totalPosts = 100;
         $now = now();
 
-        for ($i = 1; $i <= $totalPosts; $i++) {
-            $currentTimestamp = (clone $now)->subDays($totalPosts - $i);
-            $posts[] = [
-                'message' => "Post #$i",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp,
-            ];
+        // ユーザーに紐づく投稿を作成
+        $users = DB::table('users')->get();
+        foreach ($users as $user) {
+            for ($i = 1; $i <= $totalPosts; $i++) {
+                $currentTimestamp = (clone $now)->subDays($totalPosts - $i);
+                $posts[] = [
+                    'user_id' => $user->id,
+                    'message' => "Post #$i from $user->name",
+                    'created_at' => $currentTimestamp,
+                    'updated_at' => $currentTimestamp,
+                ];
+            }
         }
 
         DB::table('posts')->insert($posts);
