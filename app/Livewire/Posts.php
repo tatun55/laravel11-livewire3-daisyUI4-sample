@@ -52,6 +52,9 @@ class Posts extends Component
 
     public function updatePost()
     {
+        if (!auth()->user()->can('update', $this->post)) {
+            abort(403);
+        }
         $this->validate([
             'current_message' => 'required|max:255'
         ]);
@@ -62,6 +65,9 @@ class Posts extends Component
 
     public function deletePost()
     {
+        if (!auth()->user()->can('delete', $this->post)) {
+            abort(403);
+        }
         $this->post->delete();
     }
 
