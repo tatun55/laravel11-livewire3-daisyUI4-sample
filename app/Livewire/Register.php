@@ -28,17 +28,17 @@ class Register extends Component
     {
         $this->validate();
 
-        // Create a new user
+        // ユーザーを作成
         User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
         ]);
 
-        // Optionally, log the user in after registration
+        // ログイン
         auth()->attempt(['email' => $this->email, 'password' => $this->password]);
 
-        // Redirect to a specific page after registration
+        // ホーム画面にリダイレクト
         return redirect()->route('home');
     }
 

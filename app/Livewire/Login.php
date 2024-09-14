@@ -21,13 +21,13 @@ class Login extends Component
     {
         $this->validate();
 
-        // Attempt to log the user in
+        // ログイン
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
             // Redirect to a specific page after successful login
             return redirect()->route('home');
         }
 
-        // If authentication fails, set an error message
+        // ログイン失敗
         $this->loginError = 'メールアドレスまたはパスワードが間違っています。';
     }
 
