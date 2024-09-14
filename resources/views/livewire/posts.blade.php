@@ -89,7 +89,7 @@
                     <form wire:submit='storePost'>
 
                         {{-- ファイルアップロード --}}
-                        <input type="file" class="file-input file-input-bordered w-full max-w-md" />
+                        <input wire:model="photo" accept="image/*" type="file" class="file-input file-input-bordered w-full max-w-md" />
                         @error('photo')
                             <span class="error">{{ $message }}</span>
                         @enderror

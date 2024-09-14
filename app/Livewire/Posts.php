@@ -5,10 +5,12 @@ namespace App\Livewire;
 use App\Models\Post;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 
 class Posts extends Component
 {
     use WithPagination;
+    use WithFileUploads;
 
     public $message = '';
     public $current_message = '';
@@ -17,8 +19,13 @@ class Posts extends Component
 
     public $search = '';
 
+    // アップロードされた画像を格納するプロパティ
+    public $photo;
+
     public function storePost()
     {
+        $this->photo->store(path: 'photos');
+
         $this->validate([
             'message' => 'required|max:255'
         ]);
