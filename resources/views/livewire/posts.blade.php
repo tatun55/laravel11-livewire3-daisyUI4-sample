@@ -195,12 +195,15 @@
                     <button x-on:click="openShowModal = false;" class="btn btn-sm btn-circle btn-ghost focus:outline-none absolute right-4 top-4">✕</button>
                     <h3 class="text-lg font-bold">メッセージ</h3>
 
+                    <figure>
+                        <img src="{{ asset('storage/photos/avatar.jpg') }}">
+                    </figure>
+
                     <!-- Content -->
                     <div>
                         <p class="py-4">
                             {{ $current_message }}
                         </p>
-
                     </div>
                 </div>
             </div>
