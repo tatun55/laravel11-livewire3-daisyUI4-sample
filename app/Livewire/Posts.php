@@ -14,6 +14,7 @@ class Posts extends Component
 
     public $message = '';
     public $current_message = '';
+    public $current_photo_path = '';
 
     public Post $post;
 
@@ -32,18 +33,20 @@ class Posts extends Component
 
         // 画像がアップロードされている場合は、画像を保存する
         if ($this->photo) {
-            $path = $this->photo->store(path: 'photos');
-            $post->img_path = $path;
+            $path = $this->photo->store(path: 'public/photos');
+            $path = str_replace('public/', 'storage/', $path);
+            $post->photo_path = $path;
         }
 
         $post->save();
-        $this->reset('message');
+        $this->reset('message', 'photo');
         $this->dispatch('post-saved');
     }
 
     public function editPost($id)
     {
         $this->post = Post::find($id);
+        $this->current_photo_path = $this->post->photo_path;
         $this->current_message = $this->post->message;
     }
 

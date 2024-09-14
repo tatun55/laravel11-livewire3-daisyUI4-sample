@@ -195,9 +195,12 @@
                     <button x-on:click="openShowModal = false;" class="btn btn-sm btn-circle btn-ghost focus:outline-none absolute right-4 top-4">✕</button>
                     <h3 class="text-lg font-bold">メッセージ</h3>
 
-                    <figure>
-                        <img src="{{ asset('storage/photos/avatar.jpg') }}">
-                    </figure>
+                    <!-- Image -->
+                    @if ($current_photo_path)
+                        <figure>
+                            <img src="{{ asset($current_photo_path) }}">
+                        </figure>
+                    @endif
 
                     <!-- Content -->
                     <div>
